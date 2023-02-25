@@ -34,8 +34,10 @@ class Subscriber:
                 continue
             if self.debug == True:
                 print(f'src: {(src[0], sport)}, dst: {(dst, dport)}')
-            send(IP(src=src[0], dst=dst) / UDP(sport=sport, dport=dport) / payload)
-
+            try:
+                send(IP(src=src[0], dst=dst) / UDP(sport=sport, dport=dport) / payload)
+            except: 
+                pass
 
     def parse(self, data):
         sport = int.from_bytes(data[0:2], byteorder='big')
