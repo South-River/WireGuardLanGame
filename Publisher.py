@@ -30,11 +30,11 @@ class Publisher:
 			if self.debug == True:
 				print('Layer [UDP] not found')
 
-		data = port_to_bytes(sport) + port_to_bytes(dport) + bytes(packet[UDP].payload)
-
-		self.s.sendto(data, (self.serv_ip, self.serv_port))
-		if self.debug == True:
-			print(f'send to: {self.serv_ip}:{self.serv_port}, data len:{len(data)}')
+		if len(packet[UDP].payload) < 50:
+			data = port_to_bytes(sport)+port_to_bytes(dport)+bytes(packet[UDP].payload)
+			self.s.sendto(data, (self.serv_ip, self.serv_port))
+			if self.debug == True:
+				print(f'send to: {self.serv_ip}:{self.serv_port}, data len:{len(data)}')
 
 	def run(self):
 		f = 'udp'
